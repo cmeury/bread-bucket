@@ -1,6 +1,3 @@
-import os
-from datetime import datetime, timezone
-
 from flask import request, render_template, redirect, Blueprint, current_app
 from sqlalchemy import exc
 
@@ -9,6 +6,7 @@ from app.forms import TransactionEntryForm
 from app.models import Transaction, Account
 
 DEFAULT_LIMIT = 10
+
 views = Blueprint('views', __name__)
 
 
@@ -18,9 +16,10 @@ def currency_format(value):
     return "$ {:,.2f}".format(value)
 
 
-@views.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+@views.errorhandler(exc.SQLAlchemyError)
+def handle_db_exceptions(error):
+    current_app.logger.error(error)
+    db.session.rollback()
 
 
 @views.route('/transactions/<account_id>')
@@ -38,10 +37,7 @@ def transactions():
     return render_template('transactions.html', tx=tx, limit=limit)
 
 
-@views.errorhandler(exc.SQLAlchemyError)
-def handle_db_exceptions(error):
-    current_app.logger.error(error)
-    db.session.rollback()
+
 
 
 @views.route('/transaction', methods=['GET', 'POST'])
@@ -59,20 +55,11 @@ def new_transaction():
     # processing a validated POST request
     if form.validate_on_submit():
         account = Account.query.filter_by(id=form.account.data).first()
-        now = datetime.now()
-        now.replace(tzinfo=timezone.utc)
         tx = Transaction(amount=form.amount.data, account=account,
                          memo=form.memo.data, notes=form.notes.data)
-
         db.session.add(tx)
         db.session.commit()
-
-        account_name = account.name
-        current_app.logger.warn('New Transaction Inserted: Account=%s, Amount=%d', account_name, form.amount.data)
-
-        # touching the sqlite file, otherwise synology sync will not pick up the changes..
-        os.close(os.open(current_app.config['DB_FILE'], os.O_CREAT))
-
+        current_app.logger.info('New Transaction Inserted: Account=%s, Amount=%d', account.name, form.amount.data)
         return redirect('/transaction/success')
 
     return render_template('transaction.html', form=form)
