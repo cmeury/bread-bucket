@@ -42,6 +42,13 @@ def auth_error(status):
     return render_template("access_denied.html", status=status)
 
 
+# --- ROUTES ---------------------------------------------------------------------------------------------------------
+@views.route('/')
+@limiter.limit("10/minute")
+def root():
+    return redirect("/transaction")
+
+
 @views.route('/about')
 @limiter.limit("10/minute")
 def about():
