@@ -51,13 +51,14 @@ To push the container to Docker Hub:
 Many screenshots taken, will be added in the future here with more instructions. Needs environment variables to run:
 
 * `HTTP_BASIC_AUTH_USERNAME`: username for basic auth
-* 'HTTP_BASIC_AUTH_PASSWORD': password for basic auth
+* `HTTP_BASIC_AUTH_PASSWORD`: password for basic auth
 * `DB_FILE`: absolute path to buckets data file
 
 ### New Image
 
 New image is not recognized by container, need to:
-* Docker - Image - Add From URL: Enter `cmeury/bread-bucket`. A little blue bubble should appear next to 'Image' on the left.
+* Docker - Image - Add From URL: Enter `cmeury/bread-bucket`. A little blue bubble should appear next to 'Image' on the
+  left.
 * Wait until image is refreshed (bubble is gone)
 * Copy configuration of container & start it
 

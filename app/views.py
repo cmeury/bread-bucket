@@ -43,6 +43,7 @@ def auth_error(status):
 
 
 @views.route('/about')
+@limiter.limit("10/minute")
 def about():
     return render_template('about.html')
 
@@ -87,11 +88,12 @@ def new_transaction():
     # processing a validated POST request
     if form.validate_on_submit():
         account = Account.query.filter_by(id=form.account.data).first()
-        tx = Transaction(amount=form.amount.data, account=account,
+        amount = form.amount.data * 100  # amounts are stored in cents in the database
+        tx = Transaction(amount=amount, account=account,
                          memo=form.memo.data, notes=form.notes.data)
         db.session.add(tx)
         db.session.commit()
-        current_app.logger.info('New Transaction Inserted: Account=%s, Amount=%d', account.name, form.amount.data)
+        current_app.logger.info('New Transaction Inserted: Account=%s, Amount=%d', account.name, amount)
         return redirect('/transaction/success')
 
     return render_template('transaction.html', form=form)

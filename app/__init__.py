@@ -4,7 +4,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.pool import NullPool
 
-db = SQLAlchemy(engine_options={'echo': True, 'echo_pool': True, 'poolclass': NullPool})
+db = SQLAlchemy(engine_options={
+    'echo': False,
+    'echo_pool': False,
+    'poolclass': NullPool
+})
 
 
 def create_app():
