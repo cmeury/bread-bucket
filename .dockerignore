@@ -1,0 +1,14 @@
+node_modules
+instance
+sass
+package.json
+package-lock.json
+README.md
+**/*.buckets
+Dockerfile
+**/__pycache__
+venv
+.gitignore
+.git
+.dockerignore
+.idea

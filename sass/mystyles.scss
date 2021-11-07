@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+// https://coolors.co/8a3f0c-ceb992-2c514c-542344-7f7caf
+
+/* SCSS RGB */
+$saddle-brown: rgba(138, 63, 12, 1);
+$tan: rgba(206, 185, 146, 1);
+$tan2: rgba(206, 185, 146, 0.7);
+$dark-slate-gray: rgba(44, 81, 76, 1);
+$dark-byzantium: rgba(84, 35, 68, 1);
+$rhythm: rgba(127, 124, 175, 1);
+
+/* SCSS Gradient */
+$gradient-top: linear-gradient(0deg, #8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+$gradient-right: linear-gradient(90deg, #8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+$gradient-bottom: linear-gradient(180deg, #8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+$gradient-left: linear-gradient(270deg, #8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+$gradient-top-right: linear-gradient(45deg, #8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+$gradient-bottom-right: linear-gradient(135deg, #8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+$gradient-top-left: linear-gradient(225deg, #8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+$gradient-bottom-left: linear-gradient(315deg, #8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+$gradient-radial: radial-gradient(#8a3f0cff, #ceb992ff, #2c514cff, #542344ff, #7f7cafff);
+
+$table-head-background-color: $dark-slate-gray;
+$table-head-cell-color: wheat;
+$table-row-hover-background-color: $tan2;
+$table-striped-row-even-hover-background-color: $tan;
+
+@import "../node_modules/bulma/bulma.sass";

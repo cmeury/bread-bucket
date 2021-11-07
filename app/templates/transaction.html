@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}Enter Transactions{% endblock %}
+
+{% block content %}
+  <section class="section container has-text-centered">
+    <h1 class="title">Enter New Transaction</h1>
+    <div class="columns">
+      <div class="column is-half">
+
+        <form method="POST" action="/transaction">
+          {{ form.csrf_token }}
+
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              {{ form.account.label(class="label") }}
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    {{ form.account }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              {{ form.amount.label(class="label") }}
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <p class="control has-icons-left">
+                  {{ form.amount(size=20, class="input") }}
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-solid fa-coins"></i>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            {{ form.memo.label(class="label") }}
+            <div class="control">
+              {{ form.memo(size=20, class="input") }}
+            </div>
+          </div>
+
+          <div class="field">
+            {{ form.notes.label(class="label") }}
+            <div class="control">
+              {{ form.notes(size=20, class="input") }}
+            </div>
+          </div>
+
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-link" type="submit">Save Transaction</button>
+            </div>
+            <div class="control">
+              <button class="button is-link is-light">Cancel</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="column is-half">
+        <div class="container">
+          Cupcake ipsum dolor sit amet candy shortbread. Halvah jelly chocolate bar dragée cookie liquorice apple pie
+          carrot cake muffin. Candy cookie toffee gingerbread marshmallow. Donut muffin icing ice cream fruitcake
+          candy canes carrot cake wafer halvah. Liquorice pie topping jelly-o sesame snaps cake chocolate cake.
+          Chocolate jujubes topping sesame snaps apple pie sweet cupcake sweet. Bear claw muffin gummi bears sweet
+          roll marzipan lollipop pie bonbon. Bear claw wafer topping pastry jelly beans chocolate. Tart lemon
+          drops wafer toffee chocolate bar bonbon cupcake carrot cake gummi bears. Biscuit candy canes cookie
+          dragée wafer sugar plum chocolate bar. Danish dragée dragée jelly beans sweet liquorice. Pastry topping
+          chocolate bar jelly chocolate bar fruitcake danish. Lollipop chocolate bar tart jelly-o caramels
+          biscuit sweet roll. Sweet roll icing tiramisu bonbon sugar plum candy chupa chups. Shortbread fruitcake
+          soufflé fruitcake brownie caramels bonbon liquorice. Ice cream soufflé bonbon candy canes sugar plum.
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

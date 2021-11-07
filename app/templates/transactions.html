@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+      .important {
+          color: #336699;
+      }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Transactions List
+      </h1>
+      <p class="subtitle">
+        Displaying {{ limit }} transactions for {% if account %} account {{ account }}{% else %}all accounts{% endif %}.
+      </p>
+
+      <table class="table is-bordered is-striped is-narrow is-hoverable">
+        {#        <caption>Transactions</caption>#}
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Account</th>
+          <th>Memo</th>
+          <th>Amount</th>
+          <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in tx %}
+          <tr>
+            <td data-label="ID">{{ row.id }}</td>
+            <td data-label="Date">{{ row.posted.strftime('%Y-%m-%d') }}</td>
+            <td data-label="Account">{{ account if account else row.account.name }}</td>
+            <td data-label="Memo">{{ row.memo }}</td>
+            <td data-label="Amount" class="cell {{ "outflow" if row.amount < 0 else "inflow" }}">
+              {{ (row.amount / 100) | currency_format }}
+            </td>
+            <td data-label="Notes">{{ row.notes }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}
