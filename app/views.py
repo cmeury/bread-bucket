@@ -1,5 +1,9 @@
 from flask import request, render_template, redirect, Blueprint, current_app
+from flask_httpauth import HTTPBasicAuth
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from sqlalchemy import exc
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db
 from app.forms import TransactionEntryForm
@@ -8,6 +12,17 @@ from app.models import Transaction, Account
 DEFAULT_LIMIT = 10
 
 views = Blueprint('views', __name__)
+limiter = Limiter(current_app, key_func=get_remote_address)
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def verify_password(username, password):
+    cfg_username = current_app.config['HTTP_BASIC_AUTH_USERNAME']
+    cfg_password = current_app.config['HTTP_BASIC_AUTH_PASSWORD']
+    cfg_password_hash = generate_password_hash(cfg_password)
+    if username == cfg_username and check_password_hash(cfg_password_hash, password):
+        return username
 
 
 @views.app_template_filter()
@@ -22,7 +37,19 @@ def handle_db_exceptions(error):
     db.session.rollback()
 
 
+@auth.error_handler
+def auth_error(status):
+    return render_template("access_denied.html", status=status)
+
+
+@views.route('/about')
+def about():
+    return render_template('about.html')
+
+
 @views.route('/transactions/<account_id>')
+@auth.login_required
+@limiter.limit("10/minute")
 def transactions_for(account_id=None):
     limit = request.args.get('limit') or DEFAULT_LIMIT
     tx = Transaction.query.filter_by(account_id=account_id).order_by(Transaction.posted.desc()).limit(limit)
@@ -31,16 +58,21 @@ def transactions_for(account_id=None):
 
 
 @views.route('/transactions')
+@auth.login_required
+@limiter.limit("10/minute")
 def transactions():
     limit = request.args.get('limit') or DEFAULT_LIMIT
+
+    # get non-closed accounts
+    accounts = Account.query.filter_by(closed=0).order_by('name')
+
     tx = Transaction.query.order_by(Transaction.posted.desc()).limit(limit)
-    return render_template('transactions.html', tx=tx, limit=limit)
-
-
-
+    return render_template('transactions.html', tx=tx, limit=limit, accounts=accounts)
 
 
 @views.route('/transaction', methods=['GET', 'POST'])
+@auth.login_required
+@limiter.limit("10/minute")
 def new_transaction():
 
     # instantiate new entry form
@@ -66,5 +98,7 @@ def new_transaction():
 
 
 @views.route('/transaction/success')
+@auth.login_required
+@limiter.limit("10/minute")
 def transaction_success():
     return render_template('transaction-success.html')

@@ -1,6 +1,6 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="/">
+    <a class="navbar-item" href="/about">
       <img src="{{ url_for('static', filename='breadbucket.png') }}" height="40">
     </a>
 
@@ -13,17 +13,18 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item">
-        Home
+
+      <a class="navbar-item" href="/transaction">
+        New Transaction
       </a>
 
       <a class="navbar-item" href="/transactions">
         Transactions
       </a>
-
-      <a class="navbar-item" href="/transaction">
-        New Transaction
+      <a class="navbar-item" href="/about">
+        About
       </a>
+
 
   </div>
 </nav>

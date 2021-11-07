@@ -4,3 +4,6 @@ WTForms~=2.3.3
 Flask-SQLAlchemy~=2.5.1
 SQLAlchemy~=1.4.26
 pytz~=2021.3
+Flask-HTTPAuth~=4.5.0
+Werkzeug~=2.0.2
+Flask-Limiter~=1.4

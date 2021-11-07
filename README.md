@@ -5,11 +5,15 @@
 Crude web app to enter transactions into 'Budget with Buckets' files. Hacked together to work with
 a buckets file synced via Synology Drive and a container running on the same Synology device.
 
-This is heavy work in progress, needs a lot of UI polish and added security.
+This is work in progress, needs a lot of polish.
 
 Bucket file can be configured with an environment variable: `DB_FILE=/path/to/file.buckets`
     
-## Build
+## Develop
+
+Install node packages:
+
+    npm install
 
 Generate CSS file:
 
@@ -18,6 +22,14 @@ Generate CSS file:
 Watch for changes:
 
     npm start
+
+Create the virtual environment and start the flask app:
+
+    python3 -m venv venv
+    pip3 install -r requirements.txt
+    python3 -m flask run --host=0.0.0.0
+
+## Build
 
 To build the container:
 
@@ -36,7 +48,11 @@ To push the container to Docker Hub:
 
 ## Synology Setup
 
-Many screenshots taken, will be added in the future here with more instructions.
+Many screenshots taken, will be added in the future here with more instructions. Needs environment variables to run:
+
+* `HTTP_BASIC_AUTH_USERNAME`: username for basic auth
+* 'HTTP_BASIC_AUTH_PASSWORD': password for basic auth
+* `DB_FILE`: absolute path to buckets data file
 
 ### New Image
 

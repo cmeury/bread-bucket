@@ -18,9 +18,16 @@
         Transactions List
       </h1>
       <p class="subtitle">
-        Displaying {{ limit }} transactions for {% if account %} account {{ account }}{% else %}all accounts{% endif %}.
+        Displaying last {{ limit }} transactions for {% if account %} account {{ account }}{% else %}all accounts{% endif %}.
       </p>
-
+      {% if not account %}
+        <div class="content is-small">
+          View transactions for account
+          {% for acc in accounts %}
+            <a href="/transactions/{{ acc.id }}">{{ acc.name }}</a> {{ "|" if not loop.last }}
+          {% endfor %}
+        </div>
+      {% endif %}
       <table class="table is-bordered is-striped is-narrow is-hoverable">
         {#        <caption>Transactions</caption>#}
         <thead>

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+      .important {
+          color: #336699;
+      }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title has-text-centered">
+        About bread-bucket
+      </h1>
+      <div class="content has-text-centered">
+        <p>
+          Crude web app to enter transactions into <strong><a href="https://www.budgetwithbuckets.com/">Budget with
+          Buckets</a></strong> files. See <a href="https://github.com/cmeury/bread-bucket">GitHub repository</a> for
+          more details.
+        </p>
+        <p>The layout is done using <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>, licensed
+          <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. This web service
+          is licensed <a href="https://choosealicense.com/licenses/gpl-3.0/">GPL v3</a>. The bucket image is done by
+          Vertigophase from the Noun Project. The service is using <a href="http://fontawesome.io">Font Awesome</a>
+          icons by Dave Gandy.
+        </p>
+      </div>
+
+    </div>
+  </section>
+{% endblock %}
