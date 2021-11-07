@@ -1,3 +1,5 @@
+[![Docker Hub Badge](https://img.shields.io/docker/v/cmeury/bread-bucket)](https://hub.docker.com/repository/docker/cmeury/bread-bucket)
+
 # bread-bucket
 
 Crude web app to enter transactions into 'Budget with Buckets' files. Hacked together to work with
@@ -71,7 +73,7 @@ else
 fi
 ```
 
-Set up a regular script (every minute) in Control Panel - Task Scheduler:
+Set up a regular script (every minute) in [Control Panel - Task Scheduler](https://kb.synology.com/en-uk/DSM/help/DSM/AdminCenter/system_taskscheduler?version=7):
 
 ```bash
 cd /volume1/Drive
