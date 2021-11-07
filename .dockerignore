@@ -12,3 +12,4 @@ venv
 .git
 .dockerignore
 .idea
+images

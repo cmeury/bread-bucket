@@ -93,7 +93,7 @@ def new_transaction():
                          memo=form.memo.data, notes=form.notes.data)
         db.session.add(tx)
         db.session.commit()
-        current_app.logger.info('New Transaction Inserted: Account=%s, Amount=%d', account.name, amount)
+        current_app.logger.warn('New Transaction Inserted: Account=%s, Amount=%d', account.name, amount)
         return redirect('/transaction/success')
 
     return render_template('transaction.html', form=form)
