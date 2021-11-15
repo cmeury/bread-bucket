@@ -3,6 +3,8 @@ name: Build and Publish Container Image
 on:
   push:
     branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
 
 jobs:
 
@@ -34,6 +36,7 @@ jobs:
           images: cmeury/bread-bucket
 
       - name: Build and push Docker image
+        if: github.event_name != 'pull_request'
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           push: true
