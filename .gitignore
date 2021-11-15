@@ -259,3 +259,4 @@ dist
 .pnp.*
 
 **/*.buckets
+*.css
