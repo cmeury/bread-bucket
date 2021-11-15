@@ -1,3 +1,4 @@
+<script src="{{ url_for('static', filename='add-transaction.js') }}"></script>
 {% extends "layout.html" %}
 
 {% block title %}Enter Transactions{% endblock %}
@@ -8,7 +9,7 @@
     <div class="columns">
       <div class="column is-half">
 
-        <form method="POST" action="/transaction">
+        <form method="POST" action="/transaction" id="transactionform" name="transactionform">
           {{ form.csrf_token }}
 
           <div class="field is-horizontal">
@@ -30,15 +31,23 @@
             <div class="field-label is-normal">
               {{ form.amount.label(class="label") }}
             </div>
-            <div class="field-body">
-              <div class="field is-narrow">
+            <div class="field-body columns">
+              <span id="operator-buttons" class="control buttons has-addons column is-5">
+                  <span class="button is-danger is-selected minus-button">
+                      <i class="fas fa-minus"></i>
+                  </span>
+                  <span class="button plus-button">
+                      <i class="fas fa-plus"></i>
+                  </span>
+              </span>
+              <span class="field is-narrow column is-7">
                 <p class="control has-icons-left">
-                  {{ form.amount(size=20, class="input", type="number", placeholder="0.00") }}
+                  {{ form.amount(size=20, class="input", type="number", step="any", placeholder="0.00") }}
                   <span class="icon is-small is-left">
                     <i class="fas fa-solid fa-coins"></i>
                   </span>
                 </p>
-              </div>
+              </span>
             </div>
           </div>
 
@@ -64,7 +73,7 @@
 
           <div class="field is-grouped">
             <div class="control">
-              <button class="button is-link" type="submit">Save Transaction</button>
+              <button class="button is-link" type="submit" onclick="onSubmit()" >Save Transaction</button>
             </div>
             <div class="control">
               <button class="button is-link is-light">Cancel</button>

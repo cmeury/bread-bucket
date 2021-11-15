@@ -1,5 +1,8 @@
 /* SCSS RGB */
 /* SCSS Gradient */
+#operator-buttons {
+  margin-bottom: 0; }
+
 /*! bulma.io v0.9.3 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 .button, .input, .textarea, .select select, .file-cta,

@@ -26,4 +26,8 @@ $table-head-cell-color: wheat;
 $table-row-hover-background-color: $tan2;
 $table-striped-row-even-hover-background-color: $tan;
 
+#operator-buttons {
+    margin-bottom: 0;
+}
+
 @import "../node_modules/bulma/bulma.sass";
