@@ -14,6 +14,10 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cmeury/bread-bucket.git"
+  },
   "devDependencies": {
     "bulma": "^0.9.3",
     "node-sass": "^6.0.1"
