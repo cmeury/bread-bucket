@@ -44,7 +44,7 @@
         {% for row in tx %}
           <tr>
             <td data-label="ID">{{ row.id }}</td>
-            <td data-label="Date">{{ row.posted.strftime('%Y-%m-%d') }}</td>
+            <td data-label="Date">{{ row.posted }}</td>
             <td data-label="Account">{{ account if account else row.account.name }}</td>
             <td data-label="Memo">{{ row.memo }}</td>
             <td data-label="Amount" class="cell {{ "outflow" if row.amount < 0 else "inflow" }}">
