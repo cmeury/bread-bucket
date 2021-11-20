@@ -53,3 +53,24 @@ class Transaction(db.Model):
 
     def __repr__(self):
         return '<Transaction %r>' % self.id
+
+class User():
+    authenticated = False
+    id = None
+    password_hash = None
+
+    def __init__(self, id, password_hash):
+        self.id = id
+        self.password_hash = password_hash
+
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        return self.id
+
+    def is_authenticated(self):
+        return self.authenticated
+
+    def is_anonymous(self):
+        return False

@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.pool import NullPool
+from flask_login import LoginManager
 
 db = SQLAlchemy(engine_options={
     'echo': False,
@@ -10,25 +11,27 @@ db = SQLAlchemy(engine_options={
     'poolclass': NullPool
 })
 
+login_manager = LoginManager()
 
-def create_app():
-    app = Flask(__name__)
 
-    app.config.from_mapping(
-        SECRET_KEY='dev'
-    )
+app = Flask(__name__)
 
-    app.config['HTTP_BASIC_AUTH_USERNAME'] = os.environ.get("HTTP_BASIC_AUTH_USERNAME", default='buckets')
-    app.config['HTTP_BASIC_AUTH_PASSWORD'] = os.environ.get("HTTP_BASIC_AUTH_PASSWORD", default='dev')
+app.config.from_mapping(
+    SECRET_KEY='dev'
+)
 
-    db_file = os.environ.get("DB_FILE", default='/app/db.buckets')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_file
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['HTTP_BASIC_AUTH_USERNAME'] = os.environ.get("HTTP_BASIC_AUTH_USERNAME", default='buckets')
+app.config['HTTP_BASIC_AUTH_PASSWORD'] = os.environ.get("HTTP_BASIC_AUTH_PASSWORD", default='dev')
 
-    app.logger.warn("Connecting to SQLite Database File: %s", db_file)
-    db.init_app(app)
+db_file = os.environ.get("DB_FILE", default='/app/db.buckets')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_file
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    from . import views
-    app.register_blueprint(views.views)
+app.logger.warn("Connecting to SQLite Database File: %s", db_file)
+db.init_app(app)
+login_manager.init_app(app)
 
-    return app
+from . import views
+app.register_blueprint(views.views)
+login_manager.login_view = '/login'
+

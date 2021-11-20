@@ -30,4 +30,11 @@ $table-striped-row-even-hover-background-color: $tan;
     margin-bottom: 0;
 }
 
+#login-page {
+    background: #fffcf5;
+    height: 100vh;
+    width: 100vw;
+    max-width: unset !important;
+}
+
 @import "../node_modules/bulma/bulma.sass";
