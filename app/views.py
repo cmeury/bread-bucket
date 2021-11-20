@@ -60,8 +60,8 @@ def about():
 @limiter.limit("10/minute")
 def transactions_for(account_id=None):
     limit = request.args.get('limit') or DEFAULT_LIMIT
-    tx = Transaction.query.filter_by(account_id=account_id).order_by(Transaction.posted.desc()).limit(limit)
-    account_name = Account.query.filter_by(id=account_id).first().name
+    tx = Transaction.top(limit, account_id)
+    account_name = Account.name_by_id(account_id)
     return render_template('transactions.html', tx=tx, account=account_name, limit=limit)
 
 
@@ -71,10 +71,9 @@ def transactions_for(account_id=None):
 def transactions():
     limit = request.args.get('limit') or DEFAULT_LIMIT
 
-    # get non-closed accounts
-    accounts = Account.query.filter_by(closed=0).order_by('name')
+    accounts = Account.active_accounts()
+    tx = Transaction.top(limit)
 
-    tx = Transaction.query.order_by(Transaction.posted.desc()).limit(limit)
     return render_template('transactions.html', tx=tx, limit=limit, accounts=accounts)
 
 
@@ -87,14 +86,14 @@ def new_transaction():
     form = TransactionEntryForm()
 
     # get non-closed accounts
-    accounts = Account.query.filter_by(closed=0).order_by('name')
+    accounts = Account.active_accounts()
 
     # populate drop-down with accounts
     form.account.choices = [(acc.id, acc.name) for acc in accounts]
 
     # processing a validated POST request
     if form.validate_on_submit():
-        account = Account.query.filter_by(id=form.account.data).first()
+        account = Account.by_id(form.account.data)
         amount = form.amount.data * 100  # amounts are stored in cents in the database
         tx = Transaction(amount=amount, account=account,
                          memo=form.memo.data, notes=form.notes.data)
