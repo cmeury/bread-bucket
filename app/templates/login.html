@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<section id='login-page' class="section container">
+    <div class="column is-three-fifths is-offset-one-fifth">
+        <img src="{{ url_for('static', filename='breadbucket.png') }}" height="40">
+        <form method="POST" action="/login" id="loginform" name="loginform">
+            {{ form.csrf_token }}
+            <div class="field is-narrow">
+                <div class="label is-normal">
+                    {{ form.username.label(class="label") }}
+                </div>
+                <div class="control">
+                    {{ form.username(size=20, class="input", type="text", placeholder="Username") }}
+                </div>
+            </div>
+            <div class="field is-narrow">
+                <div class="label is-normal">
+                    {{ form.password.label(class="label") }}
+                </div>
+                <div class="control">
+                    {{ form.password(size=20, class="input", type="password", placeholder="Password") }}
+                </div>
+            </div>
+            {% if error %}
+            <p class='has-text-danger'>{{ error }}</p>
+            {% endif %}
+            <div class="field has-text-centered">
+                <div class="control">
+                    <button class="button is-primary is-medium is-fullwidth" type="submit">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

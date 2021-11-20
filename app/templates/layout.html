@@ -10,7 +10,10 @@
     {% endblock %}
 </head>
 <body>
+
+{% if not login %}
 {% include 'navbar.html' %}
+{% endif %}
 {% block content %}{% endblock %}
 </body>
 </html>
