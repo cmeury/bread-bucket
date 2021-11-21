@@ -10,7 +10,14 @@
     "start": "npm run css-watch",
     "docker-build": "docker build . -t cmeury/bread-bucket:latest",
     "docker-push": "docker push cmeury/bread-bucket:latest",
-    "publish": "npm run css-build && npm run docker-build && npm run docker-push"
+    "publish": "npm run css-build && npm run docker-build && npm run docker-push",
+    "docker-build-mobile": "docker build -f MobileDockerfile . -t bread-bucket-apk",
+    "docker-build-mobile-apk": "docker run -v ~/Source/bread-bucket/build:/build:rw bread-bucket-apk",
+    "docker-full-mobile-build": "npm run docker-build-mobile && npm run docker-build-mobile-apk",
+    "docker-connect": "docker run -it -v ~/Source/bread-bucket/build:/build:rw --entrypoint bash bread-bucket-apk",
+    "install-apk": "adb install ./build/*.apk",
+    "emulator": "~/Android/Sdk/emulator/emulator -avd Pixel_3a_API_30 -netdelay none -netspeed full",
+    "emulator-logs": "adb logcat | grep python"
   },
   "author": "",
   "license": "ISC",
