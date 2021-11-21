@@ -1,25 +1,36 @@
 from flask import request, render_template, redirect, Blueprint, current_app
-from flask_login import login_user, login_required
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 from sqlalchemy import exc
-from werkzeug.security import check_password_hash, generate_password_hash
 
-from app import db, login_manager
+from app import db
+from app.constants import RUNNING_ON_ANDROID
 from app.forms import TransactionEntryForm, LoginForm
+from app.mocks import LimiterMock, LoginManagerMock
 from app.models import Transaction, Account, User
 
 DEFAULT_LIMIT = 10
 
 views = Blueprint('views', __name__)
-limiter = Limiter(current_app, key_func=get_remote_address)
+
+if RUNNING_ON_ANDROID:
+    limiter = LimiterMock()
+    login_manager = LoginManagerMock()
+    login_required = login_manager.login_required
+    login_user = login_manager.login_user
+else:
+    from flask_limiter.util import get_remote_address
+    from flask_limiter import Limiter
+    from flask_login import login_user, login_required
+    from app import login_manager
+    limiter = Limiter(current_app, key_func=get_remote_address)
 
 @login_manager.user_loader
 def user_loader(_):
+    from werkzeug.security import generate_password_hash
     user = User(current_app.config['HTTP_BASIC_AUTH_USERNAME'], generate_password_hash(current_app.config['HTTP_BASIC_AUTH_PASSWORD']))
     return user
 
 def verify_password(user, username, password):
+    from werkzeug.security import check_password_hash
     if username == user.id and check_password_hash(user.password_hash, password):
         return username
 
@@ -44,6 +55,7 @@ def root():
 
 @views.route('/login', methods=['GET', 'POST'])
 def login():
+    from werkzeug.security import generate_password_hash
     error = None
     user = User(current_app.config['HTTP_BASIC_AUTH_USERNAME'], generate_password_hash(current_app.config['HTTP_BASIC_AUTH_PASSWORD']))
 

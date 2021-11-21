@@ -23,7 +23,7 @@ class Account(db.Model):
                 .query
                 .outerjoin(Transaction)
                 .group_by(Account.id)
-                .where(Account.closed==0)
+                .filter(Account.closed==0)
                 .order_by(func.count(Transaction.id).desc(), Account.name))
 
     def __repr__(self):
@@ -41,15 +41,13 @@ class Transaction(db.Model):
 
     @staticmethod
     def top(limit, account=None):
-        tx = (Transaction
+        return (Transaction
                 .query
-                .where(
+                .filter(
                     or_(((account is not None) and (Transaction.account_id==account))
                         ,(account is None)))
                 .order_by(Transaction.posted.desc())
                 .limit(limit))
-        print(tx)
-        return tx
 
     def __repr__(self):
         return '<Transaction %r>' % self.id
