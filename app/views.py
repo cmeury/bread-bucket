@@ -122,3 +122,20 @@ def new_transaction():
 @limiter.limit("10/minute")
 def transaction_success():
     return render_template('transaction-success.html')
+
+@views.route('/transactions/memos/<memotext>', methods=['GET'])
+@login_required
+@limiter.limit("100/minute")
+def get_memos(memotext=''):
+    limit = request.args.get('limit') or DEFAULT_LIMIT
+    returnVal = {
+        "memos": []
+    }
+    if memotext is None or memotext == '':
+        return returnVal
+
+    transactions = Transaction.memo_contains(limit, memotext)
+    for transaction in transactions:
+        returnVal['memos'].append(transaction.memo)
+
+    return returnVal

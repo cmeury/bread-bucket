@@ -1,8 +1,11 @@
-function setupOperatorToggle() {
-    var plusButton = document.querySelectorAll('.plus-button')[0];
-    var minusButton = document.querySelectorAll('.minus-button')[0];
+import getMemosBySubtext from './api.mjs';
+import autocomplete from './autocomplete.mjs';
 
-    plusButton.addEventListener('click', function() {
+function setupOperatorToggle() {
+    const plusButton = document.querySelectorAll('.plus-button')[0];
+    const minusButton = document.querySelectorAll('.minus-button')[0];
+
+    plusButton.addEventListener('click', () => {
         minusButton.classList.remove('is-selected');
         minusButton.classList.remove('is-danger');
 
@@ -10,7 +13,7 @@ function setupOperatorToggle() {
         plusButton.classList.add('is-success');
     });
 
-    minusButton.addEventListener('click', function() {
+    minusButton.addEventListener('click', () => {
         plusButton.classList.remove('is-selected');
         plusButton.classList.remove('is-success');
 
@@ -19,20 +22,19 @@ function setupOperatorToggle() {
     });
 }
 
-
-var OPERATOR = {
+const OPERATOR = {
     MINUS: 'MINUS',
     PLUS: 'PLUS'
 };
 
 function getOperator() {
-    var plusButton = document.querySelectorAll('.plus-button')[0];
+    const plusButton = document.querySelectorAll('.plus-button')[0];
     return plusButton.classList.contains('is-selected') ? OPERATOR.PLUS : OPERATOR.MINUS;
 }
 
 function onSubmit() {
-    var selectedOperator = getOperator();
-    var amountValue = document.transactionform.amount.value;
+    const selectedOperator = getOperator();
+    const amountValue = document.transactionform.amount.value;
 
     if(isNaN(parseFloat(amountValue))) {
         return;
@@ -46,6 +48,8 @@ function onSubmit() {
     document.getElementById('transactionform').submit();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     setupOperatorToggle();
+    autocomplete(document.getElementById("memo-input"), getMemosBySubtext);
+    document.getElementById('save-transaction').onclick = onSubmit;
 });

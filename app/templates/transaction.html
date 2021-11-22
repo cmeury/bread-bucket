@@ -1,4 +1,4 @@
-<script src="{{ url_for('static', filename='add-transaction.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='add-transaction.mjs') }}"></script>
 {% extends "layout.html" %}
 
 {% block title %}Enter Transactions{% endblock %}
@@ -9,7 +9,7 @@
     <div class="columns">
       <div class="column is-half">
 
-        <form method="POST" action="/transaction" id="transactionform" name="transactionform">
+        <form autocomplete="off" method="POST" action="/transaction" id="transactionform" name="transactionform">
           {{ form.csrf_token }}
 
           <div class="field is-horizontal">
@@ -53,8 +53,8 @@
 
           <div class="field">
             {{ form.memo.label(class="label") }}
-            <p class="control has-icons-left">
-              {{ form.memo(size=20, class="input") }}
+            <p class="control has-icons-left autocomplete">
+              {{ form.memo(size=20, id="memo-input", class="input") }}
               <span class="icon is-small is-left">
                 <i class="fas fa-solid fa-pencil-alt"></i>
               </span>
@@ -73,7 +73,7 @@
 
           <div class="field is-grouped">
             <div class="control">
-              <button class="button is-link" type="submit" onclick="onSubmit()" >Save Transaction</button>
+              <button class="button is-link" id="save-transaction" type="submit">Save Transaction</button>
             </div>
             <div class="control">
               <button class="button is-link is-light">Cancel</button>

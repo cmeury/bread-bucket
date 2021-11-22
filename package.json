@@ -5,12 +5,14 @@
   "main": "flask",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "copy-web-resources": "cp node_modules/p-debounce/index.js app/static/p-debounce.mjs",
     "css-build": "node-sass --omit-source-map-url sass/mystyles.scss app/static/styles.css",
     "css-watch": "npm run css-build -- --watch",
+    "web-build": "npm run copy-web-resources && npm run css-build",
     "start": "npm run css-watch",
     "docker-build": "docker build . -t cmeury/bread-bucket:latest",
     "docker-push": "docker push cmeury/bread-bucket:latest",
-    "publish": "npm run css-build && npm run docker-build && npm run docker-push"
+    "publish": "npm run web-build && npm run docker-build && npm run docker-push"
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +23,8 @@
   "devDependencies": {
     "bulma": "^0.9.3",
     "node-sass": "^6.0.1"
+  },
+  "dependencies": {
+    "p-debounce": "^4.0.0"
   }
 }
