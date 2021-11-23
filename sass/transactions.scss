@@ -1,0 +1,80 @@
+#transactions {
+
+  @media only screen and (max-width: 700px) {
+    $table-border-grey: hsl(0, 0%, 48%);
+    table {
+      width: 100%;
+
+      thead {
+        display: none;
+      }
+
+      tbody {
+        width: 100%;
+
+        tr {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-areas:
+            "topleft right"
+            "middleleft right"
+            "bottom bottom";
+          width: 100%;
+          border: 1px solid $table-border-grey;
+          border-bottom: none;
+          border-top: 1px solid $bread-bucket-pink;
+
+          &:first-child {
+            border-top: 1px solid $table-border-grey;
+            border-radius: 3px 3px 0px 0px;
+          }
+          &:last-child {
+            border-bottom: 1px solid hsl(0, 0%, 48%);
+            border-radius: 0px 0px 3px 3px;
+          }
+
+          td {
+            border: none;
+            display: inline-block;
+            border: none;
+          }
+
+          td[data-label="ID"],td[data-label="Notes"] {
+            display: none;
+          }
+          td[data-label="Date"] {
+            grid-area: topleft;
+            font-size: 0.8em;
+          }
+          td[data-label="Account"] {
+            grid-area: bottom;
+            text-align: center;
+            font-size: 0.9em;
+          }
+          td[data-label="Memo"] {
+            &:before {
+              content: "Memo:";
+              font-size: 0.8em;
+              padding-right: 5px;
+              font-weight: bold;
+            }
+            grid-area: middleleft;
+          }
+          td[data-label="Amount"] {
+            &.outflow {
+              color: #f14668;
+            }
+            &.inflow {
+              color: #48c78e;
+            }
+            grid-area: right;
+            text-align: right;
+            font-size: 1.6em;
+            font-weight: 450;
+          }
+        }
+      }
+    }
+  }
+}
+

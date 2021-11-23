@@ -33,5 +33,8 @@ $table-striped-row-even-hover-background-color: $tan;
     max-width: unset !important;
 }
 
+$bread-bucket-pink: #ed88b2;
+
 @import "./add-transaction.scss";
+@import "./transactions.scss";
 @import "../node_modules/bulma/bulma.sass";
