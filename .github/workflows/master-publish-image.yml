@@ -19,8 +19,8 @@ jobs:
       - name: Installing dependencies using npm
         run: npm install
 
-      - name: Generate static CSS files using sass
-        run: npm run css-build
+      - name: Generate web build
+        run: npm run web-build
 
       - name: Log into registry
         if: github.event_name != 'pull_request'
