@@ -34,73 +34,7 @@ The container can be customized using the following environment variables:
 * `HTTP_BASIC_AUTH_PASSWORD`: password for basic auth (default: `dev`)
 
 In any case, you need to make the web service available to the outside if you plan on using it on the go, as it is
-intended. Setup for this various a lot depending on your individual configuration. In case you run a Synology server,
-I have added the rough instructions to set this up below.
-
-
-## Synology Setup
-
-1. Install the Docker package, then download the  `cmeury/bread-bucket` image.
-2. Setup a container with the buckets file mounted to `/app/db.buckets` and
-   a port-forward from 5000 to 5000.
-3. Expose the server using dynamic DNS, port-forward in your home router and a
-   [reverse proxy](https://mariushosting.com/synology-how-to-use-reverse-proxy/)
-
-
-### Workaround: New Docker Image
-
-New images are not automatically used by containers on Synology. We need to manually force it:
-
-1. Docker - Image - Add From URL: Enter `cmeury/bread-bucket`. A little blue bubble should appear next to 'Image' on the
-   left.
-2. Wait until image is refreshed (bubble is gone)
-3. Duplicate configuration of container (Settings - Duplicate Settings)
-4. Delete the old one
-5. Set again the port of the new one to a static one
-6. Run the new containe configuration
-
-### Docker Mounted Folder Sync Problem Workaround
-
-The inotify setup is not working properly in the host when a mounted file is modified inside a Docker container. So,
-we need to 'touch' it after committing a new transaction to the SQLite file.
-
-Create a file called `check_buckets.sh` in `/volume1/Drive` and make it executable: `chmod +x check_buckets.sh`.
-
-```bash
-#!/bin/bash -eu
-# script that maintains a hash of a file and touches the file if it has
-# changed. this is a workaround of a docker mounted volume shortcoming.
-
-file="bun-bun-test.buckets"
-md5_file="${file}.md5"
-
-current_md5sum=$(md5sum "${file}")
-stored_md5sum=$(cat "${md5_file}")
-
-if [[ "${current_md5sum}" != "${stored_md5sum}" ]]; then
-	echo "File hash changed, updating file (${md5_file}): ${stored_md5sum} -> ${current_md5sum}"
-	echo "${current_md5sum}" > "${md5_file}"
-	echo "Touching file to trigger Synology Drive update.."
-	touch "${file}"
-else
-	echo "File hash unchanged: ${current_md5sum}"
-fi
-```
-
-Set up a regular script (every minute or less) in [Control Panel - Task Scheduler](https://kb.synology.com/en-uk/DSM/help/DSM/AdminCenter/system_taskscheduler?version=7)
-of type 'User-defined script' with the following settings:
-
-![](images/taskscheduler.png)
-
-And this script:
-
-![](images/runcommand.png)
-
-```bash
-cd /volume1/Drive
-./check_buckets.sh
-```
-
+intended. Setup for this various a lot depending on your individual configuration. Example setups for both Synology and unRaid are included in the Wiki.
 
 ## Development
 
@@ -108,9 +42,9 @@ Install node packages:
 
     npm install
 
-Generate CSS file:
+Generate CSS file and copy third-party Javascript to the static dir:
 
-    npm run css-build
+    npm run web-build
 
 Watch for changes:
 
