@@ -1,4 +1,4 @@
-import debounce from './p-debounce.mjs';
+import debounce from './third-party/p-debounce.mjs';
 
 /* Copied from https://www.w3schools.com/howto/howto_js_autocomplete.asp
   * and modified to suite our needs. Thanks w3schools!

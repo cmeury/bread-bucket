@@ -5,7 +5,7 @@
   "main": "flask",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "copy-web-resources": "cp node_modules/p-debounce/index.js app/static/p-debounce.mjs",
+    "copy-web-resources": "cp node_modules/p-debounce/index.js app/static/js/third-party/p-debounce.mjs",
     "css-build": "node-sass --omit-source-map-url sass/mystyles.scss app/static/styles.css",
     "css-watch": "npm run css-build -- --watch",
     "web-build": "npm run copy-web-resources && npm run css-build",
