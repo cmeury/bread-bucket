@@ -26,10 +26,6 @@ $table-head-cell-color: wheat;
 $table-row-hover-background-color: $tan2;
 $table-striped-row-even-hover-background-color: $tan;
 
-#operator-buttons {
-    margin-bottom: 0;
-}
-
 #login-page {
     background: #fffcf5;
     height: 100vh;
@@ -37,4 +33,5 @@ $table-striped-row-even-hover-background-color: $tan;
     max-width: unset !important;
 }
 
+@import "./add-transaction.scss";
 @import "../node_modules/bulma/bulma.sass";

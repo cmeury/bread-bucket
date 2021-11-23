@@ -41,15 +41,23 @@ class Transaction(db.Model):
 
     @staticmethod
     def top(limit, account=None):
-        tx = (Transaction
+        return (Transaction
                 .query
                 .where(
                     or_(((account is not None) and (Transaction.account_id==account))
                         ,(account is None)))
                 .order_by(Transaction.posted.desc())
                 .limit(limit))
-        print(tx)
-        return tx
+
+    @staticmethod
+    def memo_contains(limit, text):
+        return (Transaction
+                .query
+                .where(Transaction.memo.contains(text))
+                .group_by(Transaction.memo)
+                .order_by(func.count(Transaction.id).desc())
+                .limit(limit)
+                .all())
 
     def __repr__(self):
         return '<Transaction %r>' % self.id

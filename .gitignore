@@ -260,3 +260,7 @@ dist
 
 **/*.buckets
 *.css
+**/p-debounce.mjs
+!/app/static/js/third-party
+/app/static/js/third-party/*
+!/app/static/js/third-party/.gitkeep
