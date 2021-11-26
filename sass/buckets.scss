@@ -1,0 +1,10 @@
+#buckets {
+  .bucket {
+    .bucket-amount {
+      font-size: 1.1em;
+      &.overspent {
+        color: $bread-bucket-debit;
+      }
+    }
+  }
+}

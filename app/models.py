@@ -62,6 +62,29 @@ class Transaction(db.Model):
     def __repr__(self):
         return '<Transaction %r>' % self.id
 
+class BucketGroup(db.Model):
+    __tablename__ = 'bucket_group'
+    id = Column(Integer, primary_key=True)
+    name = Column(Text)
+    ranking = Column(Text)
+    bucket = relationship('Bucket', backref='bucket_group', lazy=True)
+
+    @staticmethod
+    def get_all_buckets(session):
+        return (session.query(BucketGroup, Bucket)
+                .where(BucketGroup.id==Bucket.group_id and Bucket.kicked==0)
+                .order_by(BucketGroup.ranking, Bucket.ranking)
+                .all())
+
+class Bucket(db.Model):
+    __tablename__ = 'bucket'
+    id = Column(Integer, primary_key=True)
+    name = Column(Text)
+    balance = Column(Integer)
+    kicked = Column(Integer)
+    ranking = Column(Text)
+    group_id = Column(Integer, ForeignKey('bucket_group.id'), nullable=False)
+
 class User():
     authenticated = False
     id = None

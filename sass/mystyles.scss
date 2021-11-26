@@ -34,7 +34,10 @@ $table-striped-row-even-hover-background-color: $tan;
 }
 
 $bread-bucket-pink: #ed88b2;
+$bread-bucket-credit: #48c78e;
+$bread-bucket-debit: #f14668;
 
 @import "./add-transaction.scss";
 @import "./transactions.scss";
+@import "./buckets.scss";
 @import "../node_modules/bulma/bulma.sass";
