@@ -35,3 +35,12 @@
     }
   }
 }
+
+.amount-control {
+  font-size: 1.5em !important;
+
+  #amount-input {
+    text-align: right;
+    font-size: unset;
+  }
+}
