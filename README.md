@@ -13,7 +13,8 @@ This is work in progress, needs a lot of polish.
 
 ## Screenshot
 
-![](images/transactionview.png)
+![](images/Transaction-Desktop.png)
+[More available in the wiki](https://github.com/cmeury/bread-bucket/wiki/Screenshots)
 
 ## Usage
 
