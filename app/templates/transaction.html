@@ -17,7 +17,7 @@
               {{ form.account.label(class="label") }}
             </div>
             <div class="field-body">
-              <div class="field is-narrow">
+              <div class="field">
                 <div class="control">
                   <div class="select is-fullwidth">
                     {{ form.account }}
@@ -27,12 +27,13 @@
             </div>
           </div>
 
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
+          <div class="field">
+            <div class="field-label is-normal has-text-centered">
               {{ form.amount.label(class="label") }}
             </div>
-            <div class="field-body columns">
-              <span id="operator-buttons" class="control buttons has-addons column is-5">
+            <div class="field-body columns is-mobile is-gapless">
+              <span id="operator-buttons"
+                  class="control buttons are-large has-addons column is-5 has-text-left pr-0">
                   <span class="button is-danger is-selected minus-button">
                       <i class="fas fa-minus"></i>
                   </span>
@@ -40,9 +41,9 @@
                       <i class="fas fa-plus"></i>
                   </span>
               </span>
-              <span class="field is-narrow column is-7">
-                <p class="control has-icons-left">
-                  {{ form.amount(size=20, class="input", type="number", step="any", placeholder="0.00") }}
+              <span class="field column auto pl-0">
+                <p class="control has-icons-left amount-control has-text-right">
+                  {{ form.amount(size=20, id="amount-input", class="input", type="text", inputmode="decimal", placeholder="0.00") }}
                   <span class="icon is-small is-left">
                     <i class="fas fa-solid fa-coins"></i>
                   </span>
