@@ -62,10 +62,10 @@
           }
           td[data-label="Amount"] {
             &.outflow {
-              color: #f14668;
+              color: $bread-bucket-debit;
             }
             &.inflow {
-              color: #48c78e;
+              color: $bread-bucket-credit;;
             }
             grid-area: right;
             text-align: right;

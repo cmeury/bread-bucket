@@ -4,10 +4,11 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from sqlalchemy import exc
 from werkzeug.security import check_password_hash, generate_password_hash
+import json
 
 from app import db, login_manager
 from app.forms import TransactionEntryForm, LoginForm
-from app.models import Transaction, Account, User
+from app.models import Transaction, Account, BucketGroup, User
 
 DEFAULT_LIMIT = 10
 
@@ -122,6 +123,19 @@ def new_transaction():
 @limiter.limit("10/minute")
 def transaction_success():
     return render_template('transaction-success.html')
+
+@views.route('/buckets', methods=['GET'])
+@login_required
+@limiter.limit("10/minute")
+def get_buckets():
+    grouped = {}
+    buckets = BucketGroup.get_all_buckets(db.session)
+    for (bucket_group, bucket) in buckets:
+        if bucket_group not in grouped:
+            grouped[bucket_group] = []
+        grouped[bucket_group].append(bucket)
+
+    return render_template('buckets.html', bucket_groups=grouped)
 
 @views.route('/transactions/memos/<memotext>', methods=['GET'])
 @login_required

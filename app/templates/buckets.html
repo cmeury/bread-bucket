@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Buckets{% endblock %}
+
+{% block content %}
+  <section id="buckets" class="section">
+    <div class="container">
+      <h1 class="title has-text-centered">Buckets</h1>
+      {% for bucket_group in bucket_groups %}
+      <div class="columns">
+      <nav class="panel column is-half is-offset-one-quarter">
+        <p class="panel-heading has-text-centered pb-2 mb-3">{{ bucket_group.name }}</p>
+        {% for bucket in bucket_groups[bucket_group] %}
+        <p class="panel-block columns pt-0 pb-0 bucket">
+          <span class="column auto">{{ bucket.name }}</span>
+          <span class="column auto has-text-right bucket-amount {{ "overspent" if bucket.balance < 0}}">{{ (bucket.balance / 100) | currency_format }}</span>
+        </p>
+        {% endfor %}
+      </nav>
+      </div>
+      {% endfor %}
+  </section>
+{% endblock %}
